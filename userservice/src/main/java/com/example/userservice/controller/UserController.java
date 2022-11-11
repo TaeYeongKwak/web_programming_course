@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,8 @@ public class UserController {
     @GetMapping(value = "/health-check")
     public String status(HttpServletRequest request){
 //        return String.format("It`s Working in User Service on Port %s", request.getServerPort());
-        return String.format("It`s Working in User Service on Port %s", env.getProperty("local.server.port"));
+//        return String.format("It`s Working in User Service on Port %s", env.getProperty("local.server.port"));
+        return String.format("%s", env.getProperty("configWelcome.message"));
     }
 
     @GetMapping("/welcome")
@@ -59,7 +61,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @GetMapping(value = "/users/{user-id}")
+    @GetMapping(value = "/users/{user-id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ResponseUser> getUser(@PathVariable("user-id") String userId){
         UserDto userDto = userService.getUserByUserId(userId);
         ResponseUser responseUser = new ModelMapper().map(userDto, ResponseUser.class);
