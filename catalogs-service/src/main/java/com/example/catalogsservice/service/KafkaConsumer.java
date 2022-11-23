@@ -21,7 +21,7 @@ public class KafkaConsumer {
 
     private final CatalogRepository catalogRepository;
 
-    @KafkaListener
+    @KafkaListener(topics = "example-order-topic")
     public void processMessage(String kafkaMessage){
         log.info("kafka Message: =====> " + kafkaMessage);
 
