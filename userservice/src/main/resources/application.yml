@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: user-service
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
   h2:
     console:
       enabled: true
@@ -32,3 +38,7 @@ greeting:
 
 order_service:
   url: http://127.0.0.1:8000/order-service/%s/orders
+
+feign:
+  hystrix:
+    enabled: true
